@@ -1,46 +1,88 @@
-<script src="https://unpkg.com/vue"></script>
-<script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="app">
-  <input type="text" v-model="userInput">
-  <button v-on:click="addTodo">Add Todo</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-do list - VueJS</title>
 
-  <ul>
-    <li 
-      v-for="todo in todos"
-      v-on:click="removeTodo(todo)">{{ todo.value }}</li>
-  </ul>
-</div>
+  <link rel="stylesheet" type="text/css" href="../styles/todo_styles.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
+</head>
 
-<script>
-  new Vue({
-  el: '#app',
-  data: {
-    todos: [],
-    userInput: ''
-  },
-  methods: {
-    addTodo: function() {
-      if (this.userInput.trim() == '') {
-        return;
-      }
-      var newTodo = {
-        id: _.uniqueId(),
-        value: this.userInput
-      };
-      this.todos.push(newTodo);
-      console.log(this.todos);
+<body>
+
+  <div id="app">
+    <div class="to-do-list">
+      <div class="to-do-input-area">
+        <input type="text"
+               v-model="userInput"
+               v-bind:class="{ 'input-error': hasError}"
+               v-on:keyup="keymonitor">
+        <button v-on:click="addTodo">Add to-do</button>
+      </div>
+
+      <ul>
+        <li 
+          v-for="todo in todos"
+          v-on:click="removeTodo(todo)">{{ todo.value }}</li>
+      </ul>
+
+      <p>Click on element to remove it from the list.</p>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+    el: '#app',
+    data: {
+      todos: [],
+      userInput: '',
+      hasError: false
     },
-    removeTodo(todo) {
-      var id = todo.id;
-      for (var i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].id == id) {
-          this.todos.splice(i, 1);
-          break;
+    methods: {
+      // Detect if user presses 'enter' key
+      keymonitor: function(event) {
+        if (event.key == "Enter") {
+          this.addTodo();
+        } else if (this.hasError && event.key != "Enter") {
+          this.hasError = false;  // Removes error class if user tried to add wrong input to list previously
+        }
+      },
+
+      // Adds a new to-do to the list
+      addTodo: function() {
+        // Check if input empty or duplicate entry
+        var in_array = this.todos.find(o => o.value === this.userInput);
+        if (this.userInput == '' || typeof in_array != 'undefined') {
+          this.hasError = true;
+          return;
+        }
+
+        var newTodo = {
+          id: _.uniqueId(),
+          value: this.userInput
+        };
+        this.todos.push(newTodo);
+
+        this.userInput = '';  // Clears input
+      },
+
+      // Removes an existing to-do from the list
+      removeTodo(todo) {
+        var id = todo.id;
+        for (var i = 0; i < this.todos.length; i++) {
+          if (this.todos[i].id == id) {
+            this.todos.splice(i, 1);
+            break;
+          }
         }
       }
     }
-  }
-});
+  });
+  </script>
 
-</script>
+</body>
+
+</html>
