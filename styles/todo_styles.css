@@ -1,0 +1,108 @@
+.to-do-list {
+  background-color: #F5F5F5;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+@media only screen and (min-width: 769px) {
+  .to-do-list {
+    max-width: 450px;
+  }
+}
+
+.to-do-list .to-do-input-area {
+  display: -webkit-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -moz-align-items: center;
+  align-items: center;
+}
+
+.to-do-list .to-do-input-area input {
+  height: 40px;
+  width: 75%;
+  border-radius: 5px;
+  border: 1px solid #EEEEEE;
+  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+  font-size: 18px;
+  padding: 1px 12px;
+}
+
+@media only screen and (max-width: 768px) {
+  .to-do-list .to-do-input-area input {
+    font-size: 12px;
+  }
+}
+
+.to-do-list .to-do-input-area input:focus {
+  outline: none;
+  border: 1px solid #4F9CFF;
+}
+
+.to-do-list .to-do-input-area input.input-error {
+  border: 1px solid red;
+}
+
+.to-do-list .to-do-input-area button {
+  height: 40px;
+  width: 25%;
+  padding: 2px 12px;
+  margin-left: 12px;
+  border: none;
+  background-color: #4F9CFF;
+  color: #FFF;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+          box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+@media only screen and (max-width: 768px) {
+  .to-do-list .to-do-input-area button {
+    font-size: 12px;
+  }
+}
+
+.to-do-list .to-do-input-area button:hover {
+  background-color: #69aaff;
+}
+
+.to-do-list .to-do-input-area button:active {
+  background-color: #1c7fff;
+}
+
+.to-do-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px 0;
+}
+
+.to-do-list ul li {
+  cursor: pointer;
+  background-color: #FFF;
+  font-size: 18px;
+  padding: 10px;
+  margin: 12px 0px;
+  border-radius: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .to-do-list ul li {
+    font-size: 14px;
+  }
+}
+
+.to-do-list ul li:hover {
+  background-color: #E3E3E3;
+}
+
+.to-do-list p {
+  font-size: 14px;
+}
+/*# sourceMappingURL=todo_styles.css.map */

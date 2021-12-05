@@ -1,46 +1,85 @@
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
 
-<input type="text">
-<button>Add Todo</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-do list</title>
 
-<ul></ul>
+  <link rel="stylesheet" href="../styles/todo_styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
 
-<script>
-	
-var inputEl = $('input');
-var buttonEl = $('button');
-var ulEl = $('ul');
+  <script>
+    $(document).ready(function() {  
+      var input_elem = $('input');
+      var button_elem = $('button');
+      var ul_elem = $('ul');
+      var todos = [];
+      
+      button_elem.click(add_todo);
+      
+      // Detect if user presses 'enter' key
+      $(document).on('keyup', function(e) {
+          if (e.which == 13) {
+            button_elem.click();
+          } else if (input_elem.hasClass('input-error') && e.which != 13) {
+            input_elem.removeClass('input-error');  // Removes error class if user tried to add wrong input to list previously
+          }
+      });
+      
+      
+      // Adds a new to-do to the list
+      function add_todo() {
+        var userInput = input_elem.val();
+        
+        // Check if input empty or duplicate entry
+        var in_array = todos.find(o => o.value === userInput);
+        if (userInput.length == 0 || typeof in_array != 'undefined') {
+          input_elem.addClass('input-error');  // Error class to add styles
+          return;
+        }
+      
+        var newTodo = { id: _.uniqueId(), value: userInput };
+        todos.push(newTodo);
+      
+        $('<li>' + userInput + '</li>')
+          .appendTo(ul_elem)
+          .attr('data-id', newTodo.id)
+          .click(remove_todo);
+      
+        input_elem.val('');  // Clears input
+      }
+      
 
-var todos = [];
+      // Removes an existing to-do from the list
+      function remove_todo(event) {
+        var clickedLi = $(this)
+        var itemId = clickedLi.attr('data-id');
+        for (var i = 0; i < todos.length; i++) {
+          if (todos[i].id == itemId) {
+            todos.splice(i, 1);
+            break;
+          }
+        }
+        clickedLi.remove();
+      }
+    });
+  </script>
+</head>
 
-buttonEl.click(addTodo);
+<body>
+  <div class="to-do-list">
+    <div class="to-do-input-area">
+      <input type="text">
+      <button>Add to-do</button>
+    </div>
+  
+    <ul></ul>
 
-function addTodo() {
-	var userInput = inputEl.val();
-  if (userInput.trim() == '') {
-  	return;
-  }
-  var newTodo = { id: Math.random(), value: userInput };
-  todos.push(newTodo);
+    <p>Click on element to remove it from the list.</p>
+  </div>
 
-  $('<li>' + userInput + '</li>')
-    .appendTo(ulEl)
-    .attr('dataset-id', newTodo.id)
-    .click(removeTodo);
+</body>
 
-  console.log(todos);
-}
-
-function removeTodo(event) {
-  var clickedLi = $(this)
-  var itemId = clickedLi.attr('dataset-id');
-  for (var i = 0; i < todos.length; i++) {
-  	if (todos[i].id == itemId) {
-    	todos.splice(i, 1);
-      break;
-    }
-  }
-  clickedLi.remove();
-  console.log(todos);
-}
-</script>
+</html>
