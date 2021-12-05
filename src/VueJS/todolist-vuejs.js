@@ -1,40 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-do list - VueJS</title>
-
-  <link rel="stylesheet" type="text/css" href="../styles/todo_styles.css">
-  <script src="https://unpkg.com/vue"></script>
-  <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.core.min.js"></script>
-</head>
-
-<body>
-
-  <div id="app">
-    <div class="to-do-list">
-      <div class="to-do-input-area">
-        <input type="text"
-               v-model="userInput"
-               v-bind:class="{ 'input-error': hasError}"
-               v-on:keyup="keymonitor">
-        <button v-on:click="addTodo">Add to-do</button>
-      </div>
-
-      <ul>
-        <li 
-          v-for="todo in todos"
-          v-on:click="removeTodo(todo)">{{ todo.value }}</li>
-      </ul>
-
-      <p>Click on element to remove it from the list.</p>
-    </div>
-  </div>
-
-  <script>
-    new Vue({
+new Vue({
     el: '#app',
     data: {
       todos: [],
@@ -56,7 +20,7 @@
         // Check if input empty or duplicate entry
         var in_array = this.todos.find(o => o.value === this.userInput);
         if (this.userInput == '' || typeof in_array != 'undefined') {
-          this.hasError = true;
+          this.hasError = true;  // Error class to add styles
           return;
         }
 
@@ -80,9 +44,4 @@
         }
       }
     }
-  });
-  </script>
-
-</body>
-
-</html>
+});
