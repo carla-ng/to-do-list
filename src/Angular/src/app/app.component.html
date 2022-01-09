@@ -1,0 +1,20 @@
+
+<input type="text" [(ngModel)]="newTodoInput">
+<button (click)="onNewTodo()">Add to-do</button>
+
+<ul>
+  <app-todo
+    *ngFor="let todo of todos"
+    [todoName]="todo"
+    (todoRemoved)="onTodoRemoved($event)"
+  >
+  </app-todo>
+</ul>
+
+<p *ngIf="todoWasDeleted">Todo deleted!</p>
+<p
+  [ngStyle]="{ color: todos.length > 3 ? 'red' : 'black' }"
+  [ngClass]="{ 'multiple-todos': todos.length > 3 }"
+>
+  Todos: {{ todos.length }}
+</p>
